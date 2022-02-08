@@ -1,5 +1,6 @@
 # Finnhub properties
-GET     /stock/company-info/:tickerName                     controllers.StockController.companyInfo(tickerName: String)
-GET     /stock/company-quote/:tickerName                    controllers.StockController.companyQuote(tickerName: String)
-GET     /stock/recommendation/:tickerName                   controllers.StockController.companyRecommendation(tickerName: String)
-GET     /stock/candle/:tickerName                           controllers.StockController.charts(tickerName: String, resolution: String, from: String, to: String)
+GET     /stock/company-info/:tickerName                             controllers.StockController.companyInfo(tickerName: String)
+GET     /stock/company-quote/:tickerName                            controllers.StockController.companyQuote(tickerName: String)
+GET     /stock/recommendation/:tickerName                           controllers.StockController.companyRecommendation(tickerName: String)
+GET     /stock/candle/:tickerName                                   controllers.StockController.charts(tickerName: String, resolution: String, from: String, to: String)
+GET     /stock/company-news/:tickerName                             controllers.StockController.news(tickerName: String, from: String, to: String)

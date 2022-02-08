@@ -1,6 +1,6 @@
 package controllers
 
-import models.{Candle, CompanyInformation, Recommendation, StockSummary}
+import models.{Candle, CompanyInformation, News, Recommendation, StockSummary}
 
 import javax.inject._
 import play.api.libs.json.{JsSuccess, Json, Writes}
@@ -20,6 +20,7 @@ class StockController @Inject() (
   implicit val stockSummaryReads = Json.reads[StockSummary]
   implicit val recommendationReads = Json.reads[Recommendation]
   implicit val candleReads = Json.reads[Candle]
+  implicit val newsReads = Json.reads[News]
   implicit val recommendationWrites = new Writes[Recommendation] {
     def writes(recommendation: Recommendation) = Json.obj(
       "buy" -> recommendation.buy,
@@ -89,6 +90,26 @@ class StockController @Inject() (
           response.json.validate[Candle] match {
             case JsSuccess(_, _) => Ok(response.json)
             case _               => BadRequest
+          }
+        }
+    }
+
+  def news(
+      tickerSymbol: String,
+      from: String,
+      to: String
+  ) =
+    Action.async {
+      request("company-news", tickerSymbol)
+        .addQueryStringParameters(
+          "from" -> from,
+          "to" -> to
+        )
+        .get()
+        .map { response =>
+          response.json.validate[Seq[News]] match {
+            case JsSuccess(x, _) if x.length > 0 => Ok(response.json)
+            case _                               => BadRequest
           }
         }
     }

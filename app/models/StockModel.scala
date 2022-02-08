@@ -45,3 +45,15 @@ case class Candle(
     t: Seq[Double],
     v: Seq[Double]
 )
+
+case class News(
+    category: String,
+    datetime: Long,
+    headline: String,
+    id: Long,
+    image: String,
+    related: String,
+    source: String,
+    summary: String,
+    url: String
+)
