@@ -14,3 +14,14 @@ case class CompanyInformation(
     logo: String,
     finnhubIndustry: String
 )
+
+case class StockSummary(
+    c: Double,
+    d: Double,
+    dp: Double,
+    h: Double,
+    l: Double,
+    o: Double,
+    pc: Double,
+    t: Double
+)

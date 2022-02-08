@@ -1,6 +1,6 @@
 package controllers
 
-import models.CompanyInformation
+import models.{CompanyInformation, StockSummary}
 
 import javax.inject._
 import play.api.libs.json.{JsSuccess, Json}
@@ -17,9 +17,10 @@ class StockController @Inject() (
 ) extends BaseController {
 
   implicit val companyInfoReads = Json.reads[CompanyInformation]
+  implicit val stockSummaryReads = Json.reads[StockSummary]
 
   def request(path: String, tickerSymbol: String) = ws
-    .url(path)
+    .url(s"https://finnhub.io/api/v1/$path")
     .addHttpHeaders("Accept" -> "application/json")
     .withRequestTimeout(5000.millis)
     .addQueryStringParameters(
@@ -29,7 +30,7 @@ class StockController @Inject() (
     .get()
 
   def companyInfo(tickerSymbol: String) = Action.async {
-    request("https://finnhub.io/api/v1/stock/profile2", tickerSymbol)
+    request("stock/profile2", tickerSymbol)
       .map { response =>
         response.json.validate[CompanyInformation] match {
           case JsSuccess(_, _) => Ok(response.json)
@@ -39,9 +40,9 @@ class StockController @Inject() (
   }
 
   def companyQuote(tickerSymbol: String) = Action.async {
-    request("https://finnhub.io/api/v1/stock/profile2", tickerSymbol)
+    request("quote", tickerSymbol)
       .map { response =>
-        response.json.validate[CompanyInformation] match {
+        response.json.validate[StockSummary] match {
           case JsSuccess(_, _) => Ok(response.json)
           case _               => BadRequest
         }
