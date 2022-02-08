@@ -25,3 +25,23 @@ case class StockSummary(
     pc: Double,
     t: Double
 )
+
+case class Recommendation(
+    buy: Int,
+    hold: Int,
+    period: String,
+    sell: Int,
+    strongBuy: Int,
+    strongSell: Int,
+    symbol: String
+)
+
+case class Candle(
+    c: Seq[Double],
+    h: Seq[Double],
+    l: Seq[Double],
+    o: Seq[Double],
+    s: String,
+    t: Seq[Double],
+    v: Seq[Double]
+)
