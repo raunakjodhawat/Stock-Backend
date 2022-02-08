@@ -1,0 +1,3 @@
+# Finnhub properties
+GET     /stock/company-info/:tickerName                 controllers.StockController.companyInfo(tickerName: String)
+GET     /stock/company-quote/:tickerName                controllers.StockController.companyQuote(tickerName: String)
